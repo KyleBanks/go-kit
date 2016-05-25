@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+var (
+	ErrRecordNotFound = gorm.ErrRecordNotFound
+)
+
 type ORM struct {
 	Username string
 	Password string
