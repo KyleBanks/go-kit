@@ -32,6 +32,9 @@ func Register(s Server, routes []Route) {
 // handleWrapper returns a request handling function that wraps the provided route.
 func handleWrapper(route Route) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// Enable CORS
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
 		start := time.Now().Unix()
 
 		log.Info("START:", r.URL.Path, r.URL.RawQuery, r.PostForm)
