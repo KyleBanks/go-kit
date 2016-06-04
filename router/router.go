@@ -48,6 +48,8 @@ func handleWrapper(route Route) func(w http.ResponseWriter, r *http.Request) {
 // If the parameter is found in the POST and the GET parameter set, the POST parameter
 // will be given priority.
 func Param(r *http.Request, key string) string {
+	r.ParseForm()
+
 	val := r.PostForm.Get(key)
 	if len(val) != 0 {
 		return val
