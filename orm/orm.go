@@ -107,6 +107,11 @@ func (orm ORM) First(model interface{}, where ...interface{}) *gorm.DB {
 	return orm.conn.First(model, where...)
 }
 
+// Last returns the last model (ordered by ID) that matches the specified query.
+func (orm ORM) Last(model interface{}, where ...interface{}) *gorm.DB {
+	return orm.conn.Last(model, where...)
+}
+
 // ModelWithId returns an instance of the specified model with the given ID.
 func (orm ORM) ModelWithId(model interface{}, id uint) error {
 	// First check if the Model exists.
