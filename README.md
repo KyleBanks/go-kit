@@ -7,5 +7,5 @@ This repository contains generic Go packages that are reused throughout various 
 ## Testing
 
 ```
-go test ./...
+go test $(go list ./... | grep -v /vendor/)
 ```
