@@ -73,8 +73,8 @@ func (orm ORM) AutoMigrate(models []interface{}) error {
 }
 
 // Exec performs a raw SQL query against the underlying database.
-func (orm ORM) Exec(query string, output interface{}) {
-	orm.conn.Raw(query).Scan(output)
+func (orm ORM) Exec(query string, output interface{}) *gorm.DB {
+	return orm.conn.Raw(query).Scan(output)
 }
 
 // Begin starts a new database transaction.
