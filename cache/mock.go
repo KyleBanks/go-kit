@@ -11,7 +11,7 @@ type Mock struct {
 }
 
 // NewMock instantiates and returns a new Mock cache.
-func NewMock() *Cache {
+func NewMock() *Mock {
 	return &Mock{
 		conn: redigomock.NewConn(),
 	}
