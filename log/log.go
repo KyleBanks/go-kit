@@ -24,9 +24,19 @@ func Info(a ...interface{}) {
 	fmt.Println(time.Now(), a)
 }
 
+// Infof outputs a formatted string to stdout.
+func Infof(format string, a ...interface{}) {
+	Info(fmt.Sprintf(format, a...))
+}
+
 // Error outputs to stderr.
 func Error(a ...interface{}) {
 	fmt.Fprintln(os.Stderr, time.Now(), a)
+}
+
+// Errorf outputs a formatted error to stderr.
+func Errorf(format string, a ...interface{}) {
+	Error(fmt.Sprintf(format, a...))
 }
 
 // PrintStack outputs the current go routine's stack trace.

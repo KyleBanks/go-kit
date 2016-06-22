@@ -7,6 +7,12 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "ZmlyOgDSXxd4Kg01uGnJj1ll+/E=",
+			"path": "github.com/alexjlockwood/gcm",
+			"revision": "2407bc782264326a3d4c71dd1ebeb8ab75221923",
+			"revisionTime": "2015-09-28T16:19:13Z"
+		},
+		{
 			"checksumSHA1": "MmmkD0U+5tX3ZlRffZXoF+N5rkg=",
 			"path": "github.com/denisenkom/go-mssqldb",
 			"revision": "2a223b1644106bc7ca456c12cde55a80185813ef",
