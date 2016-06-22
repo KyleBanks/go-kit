@@ -13,6 +13,18 @@
 			"revisionTime": "2015-09-28T16:19:13Z"
 		},
 		{
+			"checksumSHA1": "a7WiPpgsvdHn5TKnu/yUmGlhJyc=",
+			"path": "github.com/anachronistic/apns",
+			"revision": "91763352f7bfc26cca140cda1dad70e0ec9a4236",
+			"revisionTime": "2015-11-29T19:11:23Z"
+		},
+		{
+			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d",
+			"revisionTime": "2015-11-05T21:09:06Z"
+		},
+		{
 			"checksumSHA1": "MmmkD0U+5tX3ZlRffZXoF+N5rkg=",
 			"path": "github.com/denisenkom/go-mssqldb",
 			"revision": "2a223b1644106bc7ca456c12cde55a80185813ef",
@@ -115,6 +127,12 @@
 			"revisionTime": "2016-05-14T12:23:48Z"
 		},
 		{
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
+		},
+		{
 			"checksumSHA1": "R313Dr24XV8obzAXzvQVtgKMMfU=",
 			"path": "github.com/qor/inflection",
 			"revision": "3272df6c21d04180007eb3349844c89a3856bc25",
@@ -125,6 +143,24 @@
 			"path": "github.com/satori/go.uuid",
 			"revision": "f9ab0dce87d815821e221626b772e3475a0d2749",
 			"revisionTime": "2016-03-24T11:22:44Z"
+		},
+		{
+			"checksumSHA1": "K0crHygPTP42i1nLKWphSlvOQJw=",
+			"path": "github.com/stretchr/objx",
+			"revision": "1a9d0bb9f541897e62256577b352fdbc1fb4fd94",
+			"revisionTime": "2015-09-28T12:21:52Z"
+		},
+		{
+			"checksumSHA1": "iydUphwYqZRq3WhstEdGsbvBAKs=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "d77da356e56a7428ad25149ca77381849a6a5232",
+			"revisionTime": "2016-06-15T09:26:46Z"
+		},
+		{
+			"checksumSHA1": "pkygjJdYo4lYnh5HO2HYXZWcjXw=",
+			"path": "github.com/stretchr/testify/mock",
+			"revision": "d77da356e56a7428ad25149ca77381849a6a5232",
+			"revisionTime": "2016-06-15T09:26:46Z"
 		},
 		{
 			"checksumSHA1": "5HymxKSV8zcw6eiNV5Z/MZBPmuU=",
