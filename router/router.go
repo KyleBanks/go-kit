@@ -3,7 +3,6 @@ package router
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/KyleBanks/go-kit/milliseconds"
