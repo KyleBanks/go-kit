@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/KyleBanks/go-kit/log"
+	"github.com/KyleBanks/go-kit/milliseconds"
 )
 
 // Interface for the provided server to comply with
@@ -35,11 +36,11 @@ func handleWrapper(route Route) func(w http.ResponseWriter, r *http.Request) {
 		// Enable CORS
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 
-		start := time.Now().Unix()
+		start := milliseconds.NowInMilliseconds()
 
 		log.Info("START:", r.URL.Path, r.URL.RawQuery, r.PostForm)
 		route.Handle(w, r)
-		log.Info("END:", r.URL.Path, r.URL.RawQuery, r.PostForm, time.Now().Unix()-start)
+		log.Info("END:", r.URL.Path, r.URL.RawQuery, r.PostForm, milliseconds.NowInMilliseconds()-start)
 	}
 }
 

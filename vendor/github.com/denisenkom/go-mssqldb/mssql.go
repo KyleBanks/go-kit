@@ -289,7 +289,7 @@ loop:
 		// set nocount on; select 1
 		// see TestIgnoreEmptyResults test
 		//case doneStruct:
-			//break loop
+		//break loop
 		case []columnStruct:
 			cols = make([]string, len(token))
 			for i, col := range token {

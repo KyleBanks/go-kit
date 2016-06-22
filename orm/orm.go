@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"fmt"
+	"github.com/KyleBanks/go-kit/log"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/KyleBanks/go-kit/log"
 	"reflect"
 	"time"
 )

@@ -1,8 +1,8 @@
 package milliseconds
 
 import (
-	"time"
 	"testing"
+	"time"
 )
 
 func TestToMilliseconds(t *testing.T) {

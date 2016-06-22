@@ -3,10 +3,9 @@ package router
 
 import (
 	"net/http"
-	"testing"
 	"net/url"
+	"testing"
 )
-
 
 func TestParam(t *testing.T) {
 	// Ensure POST value is returned when both are set

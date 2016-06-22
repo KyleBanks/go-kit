@@ -7,8 +7,8 @@
 package cache
 
 import (
-	"github.com/garyburd/redigo/redis"
 	"github.com/KyleBanks/go-kit/log"
+	"github.com/garyburd/redigo/redis"
 )
 
 type Cache struct {
