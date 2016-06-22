@@ -23,3 +23,14 @@ func StringSliceToIntSlice(strs []string) ([]int, error) {
 
 	return ints, nil
 }
+
+// IntSliceToStringSlice converts a slice of ints to a slice of strings.
+func IntSliceToStringSlice(ints []int) ([]string) {
+	strings := make([]string, len(ints), len(ints))
+
+	for i, val := range ints {
+		strings[i] = strconv.Itoa(val)
+	}
+
+	return strings
+}
