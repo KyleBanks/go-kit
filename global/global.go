@@ -10,12 +10,13 @@ import (
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/KyleBanks/go-kit/orm"
 	"github.com/KyleBanks/go-kit/router"
+	"github.com/KyleBanks/go-kit/auth"
 )
 
 var (
 	DB     *orm.ORM
 	Server *http.Server
-	Cache  *cache.Cache
+	Cache  auth.Cache
 )
 
 // Initializes the ORM and registers models.

@@ -1,39 +1,48 @@
 package cache
 
 import (
-	"github.com/rafaeljusto/redigomock"
-	"github.com/garyburd/redigo/redis"
+	"errors"
+	"github.com/KyleBanks/go-kit/log"
 )
 
 // Mock provides a mocked Cache implementation for testing.
 type Mock struct {
-	conn *redigomock.Conn
+	cache map[string]string
 }
 
 // NewMock instantiates and returns a new Mock cache.
 func NewMock() *Mock {
 	return &Mock{
-		conn: redigomock.NewConn(),
+		cache: make(map[string]string),
 	}
 }
 
 // PutString stores a simple key-value pair in the mock.
 func (m Mock) PutString(key string, value string) (interface{}, error) {
-	return m.conn.Do("set", key, value)
+	log.Info("Mock PutString:", key, value)
+
+	m.cache[key] = value
+	return nil, nil
 }
 
 // GetString returns the string value stored with the given key.
 //
 // If the key doesn't exist, an error is returned.
 func (m Mock) GetString(key string) (string, error) {
-	return redis.String(m.conn.Do("get", key))
+	log.Info("Mock GetString:", key)
+
+	val, ok := m.cache[key]
+	if !ok {
+		return "", errors.New("Key not found")
+	}
+
+	return val, nil
 }
 
 // Delete removes an item from the mock by it's key.
 func (m Mock) Delete(key string) error {
-	if _, err := m.conn.Do("del", key); err != nil {
-		return err
-	}
+	log.Info("Mock Delete:", key)
 
+	delete(m.cache, key)
 	return nil
 }

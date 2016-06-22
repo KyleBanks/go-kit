@@ -115,12 +115,6 @@
 			"revisionTime": "2015-10-09T08:41:29Z"
 		},
 		{
-			"checksumSHA1": "kowgSVOOe4BJsYjzxxlt5xWe6Oo=",
-			"path": "github.com/rafaeljusto/redigomock",
-			"revision": "ca49a8af34fc0c903a37409317576da14b3f1cbd",
-			"revisionTime": "2016-05-24T11:12:00Z"
-		},
-		{
 			"checksumSHA1": "SZy/XZrVgAc4oX7o+3Eg4e5/hic=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "f9ab0dce87d815821e221626b772e3475a0d2749",
