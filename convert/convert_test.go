@@ -45,3 +45,18 @@ func TestIntSliceToStringSlice(t *testing.T) {
 		t.Fatalf("Unexpected result: %v", strings)
 	}
 }
+
+func TestSliceToStringSlice(t *testing.T) {
+	// Test empty
+	empty := make([]interface{}, 0, 0)
+	if len(SliceToStringSlice(empty)) != 0 {
+		t.Fatalf("Expected empty slice to return empty string slice: %v", SliceToStringSlice(empty))
+	}
+
+	// Valid
+	proper := []interface{}{1, "test"}
+	strings := SliceToStringSlice(proper)
+	if strings[0] != "1" || strings[1] != "test" {
+		t.Fatalf("Unexpected Result: %v", strings)
+	}
+}
