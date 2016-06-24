@@ -37,9 +37,9 @@ func handleWrapper(route Route) func(w http.ResponseWriter, r *http.Request) {
 
 		start := milliseconds.NowInMilliseconds()
 
-		log.Info("START:", r.URL.Path, r.URL.RawQuery, r.PostForm)
+		log.Infof("START: {Url: %v, Query: %v, Form: %v}", r.URL.Path, r.URL.RawQuery, r.PostForm)
 		route.Handle(w, r)
-		log.Info("END:", r.URL.Path, r.URL.RawQuery, r.PostForm, milliseconds.NowInMilliseconds()-start)
+		log.Infof("END: {Url: %v, Query: %v, Form: %v, Duration: %v}", r.URL.Path, r.URL.RawQuery, r.PostForm, milliseconds.NowInMilliseconds()-start)
 	}
 }
 
