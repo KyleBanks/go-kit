@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/KyleBanks/go-kit/auth"
 	"github.com/KyleBanks/go-kit/cache"
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/KyleBanks/go-kit/orm"
 	"github.com/KyleBanks/go-kit/router"
-	"github.com/KyleBanks/go-kit/auth"
 )
 
 var (
@@ -33,9 +33,9 @@ func InitORM(username string, password string, database string, models []interfa
 	}
 }
 
-// Initializes the application cache
-func InitCache() {
-	Cache = cache.New("localhost:6379")
+// InitCache initializes the application cache.
+func InitCache(host string) {
+	Cache = cache.New(host)
 }
 
 // Initializes the server and registers routes

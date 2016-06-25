@@ -52,6 +52,11 @@ func (orm *ORM) Open() *gorm.DB {
 	db.SetLogger(log.Logger)
 	db.LogMode(true)
 
+	// Configure
+	// TODO: Accept options as a param to Open
+	db.DB().SetMaxIdleConns(10)
+	db.DB().SetMaxOpenConns(0) // Unlimited
+
 	orm.conn = db
 	return orm.conn
 }
