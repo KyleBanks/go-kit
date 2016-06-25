@@ -21,6 +21,13 @@ type Cache interface {
 	PutString(key string, value string) (interface{}, error)
 	GetString(key string) (string, error)
 	Delete(key string) error
+
+	// TODO: This shouldnt have to be here, but since Global references
+	// the auth.Cache interface, we need to add it for now so that the Cache
+	// package can be used globally.
+	// TODO: Refactor global to reference cache.Cache instead of auth.Cache
+	PutMarshaled(key string, value interface{}) (interface{}, error)
+	GetMarshaled(key string, v interface{}) error
 }
 
 // Sets the Cache to use for authentication tokens.
