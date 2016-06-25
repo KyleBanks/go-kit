@@ -7,10 +7,20 @@
 package cache
 
 import (
+	"encoding/json"
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/garyburd/redigo/redis"
-	"encoding/json"
 )
+
+// Cacher defines a mockable Cache interface that can store values in a key-value cache.
+type Cacher interface {
+	PutString(key string, value string) (interface{}, error)
+	GetString(key string) (string, error)
+	Delete(key string) error
+
+	PutMarshaled(key string, value interface{}) (interface{}, error)
+	GetMarshaled(key string, v interface{}) error
+}
 
 type Cache struct {
 	pool *redis.Pool

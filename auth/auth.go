@@ -3,11 +3,12 @@ package auth
 
 import (
 	"fmt"
+	"github.com/KyleBanks/go-kit/cache"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var (
-	authCache Cache // cache is used for storing authentication tokens.
+	authCache cache.Cacher // cache is used for storing authentication tokens.
 )
 
 // Authenticator defines an interface for an authenticate-able User.
@@ -16,22 +17,8 @@ type Authenticator interface {
 	HashedPassword() string // HashedPassword returns the user's password hash.
 }
 
-// Cache defines the interface required for the authentication cache.
-type Cache interface {
-	PutString(key string, value string) (interface{}, error)
-	GetString(key string) (string, error)
-	Delete(key string) error
-
-	// TODO: This shouldnt have to be here, but since Global references
-	// the auth.Cache interface, we need to add it for now so that the Cache
-	// package can be used globally.
-	// TODO: Refactor global to reference cache.Cache instead of auth.Cache
-	PutMarshaled(key string, value interface{}) (interface{}, error)
-	GetMarshaled(key string, v interface{}) error
-}
-
 // Sets the Cache to use for authentication tokens.
-func SetCache(c Cache) {
+func SetCache(c cache.Cacher) {
 	authCache = c
 }
 
