@@ -3,6 +3,7 @@ package cache
 import (
 	"errors"
 	"github.com/KyleBanks/go-kit/log"
+	"encoding/json"
 )
 
 // Mock provides a mocked Cache implementation for testing.
@@ -37,6 +38,37 @@ func (m Mock) GetString(key string) (string, error) {
 	}
 
 	return val, nil
+}
+
+// PutMarshaled stores a json marshalled value with the given key.
+func (m Mock) PutMarshaled(key string, value interface{}) (interface{}, error) {
+	// Marshal to JSON
+	bytes, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+
+	// Store in the cache
+	return m.PutString(key, string(bytes[:]))
+}
+
+// GetMarshaled retrieves an item from the cache with the specified key,
+// and un-marshals it from JSON to the value provided.
+//
+// If they key doesn't exist, an error is returned.
+func (m Mock) GetMarshaled(key string, v interface{}) error {
+	cached, err := m.GetString(key)
+	if err != nil {
+		return err
+	}
+
+	if len(cached) > 0 {
+		if err := json.Unmarshal([]byte(cached), v); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Delete removes an item from the mock by it's key.

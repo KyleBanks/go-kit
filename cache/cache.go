@@ -9,6 +9,7 @@ package cache
 import (
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/garyburd/redigo/redis"
+	"encoding/json"
 )
 
 type Cache struct {
@@ -22,7 +23,7 @@ func New(host string) *Cache {
 	return &Cache{
 		pool: &redis.Pool{
 			MaxIdle:   5,
-			MaxActive: 10,
+			MaxActive: 100,
 			Dial: func() (redis.Conn, error) {
 				return redis.Dial("tcp", host)
 			},
@@ -46,6 +47,37 @@ func (c Cache) GetString(key string) (string, error) {
 	defer r.Close()
 
 	return redis.String(r.Do("get", key))
+}
+
+// PutMarshaled stores a json marshalled value with the given key.
+func (c Cache) PutMarshaled(key string, value interface{}) (interface{}, error) {
+	// Marshal to JSON
+	bytes, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+
+	// Store in the cache
+	return c.PutString(key, string(bytes[:]))
+}
+
+// GetMarshaled retrieves an item from the cache with the specified key,
+// and un-marshals it from JSON to the value provided.
+//
+// If they key doesn't exist, an error is returned.
+func (c Cache) GetMarshaled(key string, v interface{}) error {
+	cached, err := c.GetString(key)
+	if err != nil {
+		return err
+	}
+
+	if len(cached) > 0 {
+		if err := json.Unmarshal([]byte(cached), v); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Delete removes an item from the cache by it's key.
