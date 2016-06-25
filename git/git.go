@@ -3,8 +3,9 @@ package git
 
 import (
 	"fmt"
-	"path/filepath"
+	"github.com/KyleBanks/go-kit/log"
 	"os"
+	"path/filepath"
 )
 
 const (
@@ -15,9 +16,10 @@ const (
 // for the .git directory specified by the path provided.
 //
 // The path should be to the .git directory.
+// For example: <gopath>/src/github.com/KyleBanks/go-kit/.git
 func InstallPreCommitHook(hook string, path string) error {
 	filename := fmt.Sprintf("%v/.git/hooks/pre-commit", filepath.Dir(path))
-	file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, filePermission)
+	file, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
@@ -32,5 +34,6 @@ func InstallPreCommitHook(hook string, path string) error {
 		return err
 	}
 
+	log.Infof("pre-commit hook written to: %v", file.Name())
 	return nil
 }
