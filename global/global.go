@@ -10,7 +10,6 @@ import (
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/KyleBanks/go-kit/orm"
 	"github.com/KyleBanks/go-kit/router"
-	"fmt"
 )
 
 var (
@@ -20,13 +19,9 @@ var (
 )
 
 // Initializes the ORM and registers models.
-func InitORM(username string, password string, database string, models []interface{}) {
-	DB = &orm.ORM{
-		Username: username,
-		Password: password,
-		Database: database,
-	}
-	DB.Open("sqlite3", fmt.Sprintf("/tmp/orm-test-%v.db", time.Now().Unix()))
+func InitORM(dialect, connectionString string, models []interface{}) {
+	DB = &orm.ORM{}
+	DB.Open(dialect, connectionString)
 
 	if err := DB.AutoMigrate(models); err != nil {
 		panic(err)

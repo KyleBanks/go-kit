@@ -16,10 +16,6 @@ var (
 )
 
 type ORM struct {
-	Username string
-	Password string
-	Database string
-
 	conn *gorm.DB
 }
 
@@ -41,7 +37,7 @@ func (orm *ORM) Open(dialect, connectionString string) *gorm.DB {
 		panic(errors.New("Database handle is nil!"))
 	}
 
-	log.Info("Database connection established:", orm.Database)
+	log.Infof("Database connection established: {Dialect: %v, ConnectionString: %v}", dialect, connectionString)
 
 	// Enable logging
 	db.SetLogger(log.Logger)
