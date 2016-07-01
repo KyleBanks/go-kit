@@ -3,8 +3,8 @@ package convert
 
 import (
 	"errors"
-	"strconv"
 	"fmt"
+	"strconv"
 )
 
 // StringSliceToIntSlice accepts a slice of strings and returns a slice of parsed ints.
@@ -31,6 +31,17 @@ func IntSliceToStringSlice(ints []int) []string {
 
 	for i, v := range ints {
 		strings[i] = strconv.Itoa(v)
+	}
+
+	return strings
+}
+
+// UintSliceToStringSlice converts a slice of uints to a slice of strings.
+func UintSliceToStringSlice(ints []uint) []string {
+	strings := make([]string, len(ints), len(ints))
+
+	for i, v := range ints {
+		strings[i] = fmt.Sprintf("%v", v)
 	}
 
 	return strings

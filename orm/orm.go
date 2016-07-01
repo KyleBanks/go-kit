@@ -4,12 +4,11 @@ package orm
 import (
 	"errors"
 
-	"fmt"
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/go-sql-driver/mysql"
 	"reflect"
-	"time"
 )
 
 var (
@@ -30,16 +29,12 @@ type Model struct {
 }
 
 // open creates a database connection, or returns an existing one if present.
-func (orm *ORM) Open() *gorm.DB {
+func (orm *ORM) Open(dialect, connectionString string) *gorm.DB {
 	if orm.conn != nil {
 		return orm.conn
 	}
 
-	// TODO: Use mysql
-	dbName := fmt.Sprintf("/tmp/gorm-%d.db", time.Now().Unix())
-	log.Info("Using DB:", dbName)
-
-	db, err := gorm.Open("sqlite3", dbName)
+	db, err := gorm.Open(dialect, connectionString)
 	if err != nil {
 		panic(err)
 	} else if db == nil {

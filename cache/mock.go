@@ -1,9 +1,9 @@
 package cache
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/KyleBanks/go-kit/log"
-	"encoding/json"
 )
 
 // Mock provides a mocked Cache implementation for testing.
