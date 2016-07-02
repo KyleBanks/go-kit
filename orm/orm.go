@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"github.com/KyleBanks/go-kit/log"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	_ "github.com/go-sql-driver/mysql"
 	"reflect"
 )
 
@@ -32,9 +32,12 @@ func (orm *ORM) Open(dialect, connectionString string) *gorm.DB {
 
 	db, err := gorm.Open(dialect, connectionString)
 	if err != nil {
+		log.Errorf("Error opening database connection: %v", err)
 		panic(err)
 	} else if db == nil {
-		panic(errors.New("Database handle is nil!"))
+		err := errors.New("Database handle is nil!")
+		log.Errorf("Error opening database connection: %v", err)
+		panic(err)
 	}
 
 	log.Infof("Database connection established: {Dialect: %v, ConnectionString: %v}", dialect, connectionString)
@@ -58,9 +61,9 @@ func (orm ORM) AutoMigrate(models []interface{}) error {
 		modelName := reflect.Indirect(reflect.ValueOf(model)).Type()
 		log.Info("Migrating model:", modelName)
 
-		if err := orm.conn.AutoMigrate(model).GetErrors(); len(err) > 0 {
+		if err := orm.conn.AutoMigrate(model).Error; err != nil {
 			log.Error("AutoMigrate failed for model", modelName)
-			return err[0]
+			return err
 		}
 		log.Info("Model migrated:", modelName)
 	}
