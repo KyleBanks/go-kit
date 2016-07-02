@@ -10,16 +10,19 @@ import (
 	"encoding/json"
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/garyburd/redigo/redis"
+	"time"
 )
 
 // Cacher defines a mockable Cache interface that can store values in a key-value cache.
 type Cacher interface {
 	PutString(key string, value string) (interface{}, error)
 	GetString(key string) (string, error)
-	Delete(key string) error
 
 	PutMarshaled(key string, value interface{}) (interface{}, error)
 	GetMarshaled(key string, v interface{}) error
+
+	Delete(key string) error
+	Expire(key string, seconds time.Duration) error
 }
 
 type Cache struct {
@@ -86,7 +89,6 @@ func (c Cache) GetMarshaled(key string, v interface{}) error {
 			return err
 		}
 	}
-
 	return nil
 }
 
@@ -98,6 +100,16 @@ func (c Cache) Delete(key string) error {
 	if _, err := r.Do("del", key); err != nil {
 		return err
 	}
+	return nil
+}
 
+// Expire sets the time for a key to expire in seconds.
+func (c Cache) Expire(key string, seconds time.Duration) error {
+	r := c.pool.Get()
+	defer r.Close()
+
+	if _, err := r.Do("expire", key, seconds); err != nil {
+		return err
+	}
 	return nil
 }

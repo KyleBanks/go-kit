@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/KyleBanks/go-kit/log"
+	"time"
 )
 
 // Mock provides a mocked Cache implementation for testing.
@@ -76,5 +77,16 @@ func (m Mock) Delete(key string) error {
 	log.Info("Mock Delete:", key)
 
 	delete(m.cache, key)
+	return nil
+}
+
+// Expire sets the time for a key to expire in seconds.
+func (m Mock) Expire(key string, seconds time.Duration) error {
+	log.Info("Mock Expire:", key, seconds)
+
+	go func() {
+		time.Sleep(time.Second * time.Duration(seconds))
+		m.Delete(key)
+	}()
 	return nil
 }
