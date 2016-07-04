@@ -3,4 +3,4 @@ language: go
 services:
   - redis-server
 
-script: go-test.sh
+script: ./go-test.sh
