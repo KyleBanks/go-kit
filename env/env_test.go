@@ -7,6 +7,7 @@ import (
 
 func TestEnvService_Environment(t *testing.T) {
 	// Defaults to dev
+	os.Setenv(EnvironmentVariable, "Unknown")
 	if env := Environment(); env != Dev {
 		t.Fatalf("Unexpected default environment: %v", env)
 	}
