@@ -1,5 +1,7 @@
 language: go
 
+install: true
+
 services:
   - redis-server
 
