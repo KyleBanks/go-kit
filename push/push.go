@@ -7,6 +7,10 @@ import (
 	"github.com/anachronistic/apns"
 )
 
+const (
+	IOS_DEFAULT_SOUND = "default"
+)
+
 // Pusher defines the interface for a push notification Pusher.
 type Pusher interface {
 
@@ -22,6 +26,9 @@ type PushMessage struct {
 
 	// Data contains any additional data to be sent with the notification.
 	Data map[string]interface{}
+
+	// IosSound is the sound to play for iOS devices specifically.
+	IosSound string
 }
 
 // NewAndroidPusher returns an AndroidPusher, initialized with the specified
