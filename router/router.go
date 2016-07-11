@@ -57,3 +57,8 @@ func Param(r *http.Request, key string) string {
 
 	return r.URL.Query().Get(key)
 }
+
+// HasParam returns a boolean indicating if the request has a particular parameter.
+func HasParam(r *http.Request, key string) bool {
+	return len(Param(r, key)) > 0
+}
