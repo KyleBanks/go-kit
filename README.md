@@ -9,6 +9,7 @@ This repository contains generic Go packages that are reused throughout various 
 - [cache](./cache) is a wrapper for Redis, with a mock to use for unit testing without a Redis server.
 - [contains](./contains) provides functions for checking if a slice contains a specific value.
 - [convert](./convert) provides conversion of various data-types, such as a string slice to int slice, and vice-versa.
+- [dynamodb](./dynamodb) provides a wrapper for the AWS DynamoDB SDK.
 - [env](./env) is a simple environment variable wrapper to return an application environment (Dev/Test/Prod) via an environment variable.
 - [git](./git) provides the ability to install a pre-commit git hook within Go.
 - [global](./global) is something used in a few projects to easily access a global Database/Cache/server.

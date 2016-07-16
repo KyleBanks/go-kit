@@ -19,6 +19,12 @@
 			"revisionTime": "2015-11-29T19:11:23Z"
 		},
 		{
+			"checksumSHA1": "4+wnUoVOdK9cHy7rqdQdweYKiOA=",
+			"path": "github.com/bitly/go-simplejson",
+			"revision": "aabad6e819789e569bd6aabf444c935aa9ba1e44",
+			"revisionTime": "2015-09-15T16:53:35Z"
+		},
+		{
 			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d",
@@ -53,6 +59,18 @@
 			"path": "github.com/go-sql-driver/mysql",
 			"revision": "3654d25ec346ee8ce71a68431025458d52a38ac0",
 			"revisionTime": "2016-06-02T00:10:21Z"
+		},
+		{
+			"checksumSHA1": "UaHQLIodGlVa7OfZazQZ25rgRx8=",
+			"path": "github.com/goamz/goamz/aws",
+			"revision": "ff7846e9c73d32649a7f2d77728c7d6984fde108",
+			"revisionTime": "2016-07-15T14:42:20Z"
+		},
+		{
+			"checksumSHA1": "ZcRojkIhwbgfuZPpvSRWwwTfS3I=",
+			"path": "github.com/goamz/goamz/dynamodb",
+			"revision": "ff7846e9c73d32649a7f2d77728c7d6984fde108",
+			"revisionTime": "2016-07-15T14:42:20Z"
 		},
 		{
 			"checksumSHA1": "YxnIClH4Ic8Do15xlO9hx/+xzuY=",
@@ -161,6 +179,12 @@
 			"path": "github.com/stretchr/testify/mock",
 			"revision": "d77da356e56a7428ad25149ca77381849a6a5232",
 			"revisionTime": "2016-06-15T09:26:46Z"
+		},
+		{
+			"checksumSHA1": "sFD8LpJPQtWLwGda3edjf5mNUbs=",
+			"path": "github.com/vaughan0/go-ini",
+			"revision": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1",
+			"revisionTime": "2013-09-23T14:52:12Z"
 		},
 		{
 			"checksumSHA1": "5HymxKSV8zcw6eiNV5Z/MZBPmuU=",
