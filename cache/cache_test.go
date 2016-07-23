@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"testing"
 	"time"
+	"fmt"
 )
 
 var (
@@ -59,5 +60,60 @@ func TestCache_GetString_DeletedKey(t *testing.T) {
 
 	if _, err := cache.GetString(TestKey); err == nil {
 		t.Error("Expected error getting deleted key!")
+	}
+}
+
+func TestCache_Lock(t *testing.T) {
+	cache := New(ValidHost)
+
+	key := fmt.Sprintf("testLock:%v", time.Now().Unix())
+	value := "avalue"
+
+	// Base test
+	if locked, err := cache.Lock(key, value, 1000); err != nil {
+		t.Fatal(err)
+	} else if !locked {
+		t.Fatal("Expected valid lock to return true")
+	}
+
+	// Try to lock the same key
+	if locked, err := cache.Lock(key, value, 1000); err != nil {
+		t.Fatal(err)
+	} else if locked {
+		t.Fatal("Expected invalid lock to return false")
+	}
+
+	// Wait
+	time.Sleep(time.Millisecond * 1000)
+
+	// Try again
+	if locked, err := cache.Lock(key, value, 1000); err != nil {
+		t.Fatal(err)
+	} else if !locked {
+		t.Fatal("Expected valid lock to return true")
+	}
+}
+
+func TestCache_Unlock(t *testing.T) {
+	cache := New(ValidHost)
+
+	key := fmt.Sprintf("testUnlock:%v", time.Now().Unix())
+	value := "avalue"
+
+	cache.Lock(key, value, 1000)
+
+	// Bad key
+	if err := cache.Unlock("badkey", value); err != ErrCantUnlock {
+		t.Fatal(err)
+	}
+
+	// Bad value
+	if err := cache.Unlock(key, "badvalue"); err != ErrCantUnlock {
+		t.Fatal(err)
+	}
+
+	// Valid
+	if err := cache.Unlock(key, value); err != nil {
+		t.Fatal(err)
 	}
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/KyleBanks/go-kit/log"
 	"sync"
 	"time"
+	"fmt"
 )
 
 // Mock provides a mocked Cache implementation for testing.
@@ -98,4 +99,29 @@ func (m Mock) Expire(key string, seconds time.Duration) error {
 		m.Delete(key)
 	}()
 	return nil
+}
+
+func (m Mock) Lock(key, value string, durationMs int) (bool, error) {
+	// TODO: Probably a better way to do this
+	if _, err := m.GetString(key); err == nil {
+		return false, errors.New("Key already exists")
+	}  else {
+		m.PutString(key, value)
+		d, _ := time.ParseDuration(fmt.Sprintf("%vms", durationMs))
+		m.Expire(key, d)
+		return true, nil
+	}
+}
+
+func (m Mock) Unlock(key, value string) error {
+	// TODO: Probably a better way to do this
+
+	if val, err := m.GetString(key); err != nil {
+		return err
+	} else if val != value {
+		return errors.New("Value mismatch")
+	} else {
+		m.Delete(key)
+		return nil
+	}
 }

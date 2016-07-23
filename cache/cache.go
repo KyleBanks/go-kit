@@ -8,9 +8,27 @@ package cache
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/KyleBanks/go-kit/log"
 	"github.com/garyburd/redigo/redis"
 	"time"
+)
+
+const (
+	lockScript = `
+		return redis.call('SET', KEYS[1], ARGV[1], 'NX', 'PX', ARGV[2])
+	`
+	unlockScript = `
+		if redis.call("get",KEYS[1]) == ARGV[1] then
+		    return redis.call("del",KEYS[1])
+		else
+		    return 0
+		end
+	`
+)
+
+var (
+	ErrCantUnlock = errors.New("Failed to Unlock")
 )
 
 // Cacher defines a mockable Cache interface that can store values in a key-value cache.
@@ -23,6 +41,9 @@ type Cacher interface {
 
 	Delete(key string) error
 	Expire(key string, seconds time.Duration) error
+
+	Lock(key, value string, timeoutMs int) (bool, error)
+	Unlock(key, value string) error
 }
 
 type Cache struct {
@@ -112,4 +133,39 @@ func (c Cache) Expire(key string, seconds time.Duration) error {
 		return err
 	}
 	return nil
+}
+
+// Lock attempts to put a lock on the key for a specified duration (in milliseconds).
+// If the lock was successfully acquired, true will be returned.
+//
+// Note: The value provided can be anything, so long as it's unique. The value will then be used when
+// attempting to Unlock, and will only work if the value matches. It's important that each instance that tries
+// to perform a Lock have it's own unique key so that you don't unlock another instances lock!
+func (c Cache) Lock(key, value string, timeoutMs int) (bool, error) {
+	r := c.pool.Get()
+	defer r.Close()
+
+	cmd := redis.NewScript(1, lockScript)
+	if res, err := cmd.Do(r, key, value, timeoutMs); err != nil {
+		return false, err
+	} else {
+		return res == "OK", nil
+	}
+}
+
+// Unlock attempts to remove the lock on a key so long as the value matches.
+// If the lock cannot be removed, either because the key has already expired or
+// because the value was incorrect, an error will be returned.
+func (c Cache) Unlock(key, value string) error {
+	r := c.pool.Get()
+	defer r.Close()
+
+	cmd := redis.NewScript(1, unlockScript)
+	if res, err := redis.Int(cmd.Do(r, key, value)); err != nil {
+		return err
+	} else if res != 1 {
+		return ErrCantUnlock
+	} else {
+		return nil
+	}
 }
