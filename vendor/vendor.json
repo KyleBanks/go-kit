@@ -133,10 +133,10 @@
 			"revisionTime": "2016-05-10T22:24:21Z"
 		},
 		{
-			"checksumSHA1": "lCBn04LJsYdQhXsZeZRNR0L3ly4=",
+			"checksumSHA1": "KvUWnb+svMKP6VEKobmj9Y/sI4w=",
 			"path": "github.com/mattn/go-sqlite3",
-			"revision": "38ee283dabf11c9cbdb968eebd79b1fa7acbabe6",
-			"revisionTime": "2016-05-14T12:23:48Z"
+			"revision": "b5c99a720374818b629fd1fbf6d2cbb4fb9a5644",
+			"revisionTime": "2016-08-21T07:55:01Z"
 		},
 		{
 			"checksumSHA1": "vUcHzx0aV5Vid+r3FyGE1Y7QkHs=",
