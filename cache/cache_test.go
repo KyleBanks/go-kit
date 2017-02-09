@@ -84,7 +84,7 @@ func TestCache_Lock(t *testing.T) {
 	}
 
 	// Wait
-	time.Sleep(time.Millisecond * 1000)
+	time.Sleep(time.Millisecond * 1100)
 
 	// Try again
 	if locked, err := cache.Lock(key, value, 1000); err != nil {
