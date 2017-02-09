@@ -1,35 +1,39 @@
 // Package env provides application environment detection, and support for a Dev/Test/Prod environment system.
 package env
 
-import "os"
+import (
+	"os"
+)
 
 const (
+	// EnvironmentVariable is the name of the environment variable to look for
+	// when determining the application environment.
 	EnvironmentVariable = "GO_ENV"
 )
 
 var (
-	Dev  = environment{"DEV"}
-	Test = environment{"TEST"}
-	Prod = environment{"PROD"}
+	// Dev is a development environment.
+	Dev Environment = "DEV"
+	// Test is a testing environment.
+	Test Environment = "TEST"
+	// Prod is a production environment.
+	Prod Environment = "PROD"
 )
 
-type environment struct {
-	ID string
-}
+type Environment string
 
-// Environment returns the current environment that the go application is running in,
+// Get returns the current environment that the go application is running in,
 // based on the environment variable. If no environment variable is found, or
 // it is not one of Dev/Test/Prod, the default (Dev) will be returned.
-func Environment() environment {
+func Get() Environment {
 	envVar := os.Getenv(EnvironmentVariable)
-	if len(envVar) > 0 {
-		switch envVar {
-		case Test.ID:
-			return Test
-		case Prod.ID:
-			return Prod
-		}
-	}
 
-	return Dev
+	switch Environment(envVar) {
+	case Test:
+		return Test
+	case Prod:
+		return Prod
+	default:
+		return Dev
+	}
 }

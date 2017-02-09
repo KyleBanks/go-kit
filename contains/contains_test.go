@@ -1,6 +1,8 @@
 package contains
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestInt(t *testing.T) {
 	// Negative cases

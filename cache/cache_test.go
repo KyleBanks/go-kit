@@ -1,10 +1,10 @@
 package cache
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 	"time"
-	"fmt"
 )
 
 var (

@@ -1,17 +1,19 @@
-// Simple cache wrapper, used to abstract Redis/Memcache/etc behind a reusable
+// Package cache is a simple cache wrapper, used to abstract Redis/Memcache/etc behind a reusable
 // API for simple use cases.
 //
 // The idea is that Redis could be swapped for another cache and the client wouldn't
 // need to update another (except perhaps calls to New to provide different connection
 // parameters).
+//
+// For now cache supports only Redis, but eventually that could be provided by the client.
 package cache
 
 import (
 	"encoding/json"
 	"errors"
-	"github.com/KyleBanks/go-kit/log"
-	"github.com/garyburd/redigo/redis"
 	"time"
+
+	"github.com/garyburd/redigo/redis"
 )
 
 const (
@@ -28,7 +30,8 @@ const (
 )
 
 var (
-	ErrCantUnlock = errors.New("Failed to Unlock")
+	// ErrCantUnlock is returned if the cache fails to unlock a key.
+	ErrCantUnlock = errors.New("failed to unlock")
 )
 
 // Cacher defines a mockable Cache interface that can store values in a key-value cache.
@@ -46,14 +49,13 @@ type Cacher interface {
 	Unlock(key, value string) error
 }
 
+// Cache implements the Cacher interface using a Redis pool.
 type Cache struct {
 	pool *redis.Pool
 }
 
 // New instantiates and returns a new Cache.
 func New(host string) *Cache {
-	log.Info("Initializing Cache...")
-
 	return &Cache{
 		pool: &redis.Pool{
 			MaxIdle:   5,
@@ -146,11 +148,12 @@ func (c Cache) Lock(key, value string, timeoutMs int) (bool, error) {
 	defer r.Close()
 
 	cmd := redis.NewScript(1, lockScript)
-	if res, err := cmd.Do(r, key, value, timeoutMs); err != nil {
+	res, err := cmd.Do(r, key, value, timeoutMs)
+	if err != nil {
 		return false, err
-	} else {
-		return res == "OK", nil
 	}
+
+	return res == "OK", nil
 }
 
 // Unlock attempts to remove the lock on a key so long as the value matches.
@@ -165,7 +168,7 @@ func (c Cache) Unlock(key, value string) error {
 		return err
 	} else if res != 1 {
 		return ErrCantUnlock
-	} else {
-		return nil
 	}
+
+	return nil
 }

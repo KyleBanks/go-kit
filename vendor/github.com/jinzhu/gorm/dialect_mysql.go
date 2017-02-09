@@ -1,13 +1,10 @@
 package gorm
 
 import (
-	"crypto/sha1"
 	"fmt"
 	"reflect"
-	"regexp"
 	"strings"
 	"time"
-	"unicode/utf8"
 )
 
 type mysql struct {
@@ -36,28 +33,24 @@ func (mysql) DataTypeOf(field *StructField) string {
 			sqlType = "boolean"
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32:
 			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
 				sqlType = "int AUTO_INCREMENT"
 			} else {
 				sqlType = "int"
 			}
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uintptr:
 			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
 				sqlType = "int unsigned AUTO_INCREMENT"
 			} else {
 				sqlType = "int unsigned"
 			}
 		case reflect.Int64:
 			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
 				sqlType = "bigint AUTO_INCREMENT"
 			} else {
 				sqlType = "bigint"
 			}
 		case reflect.Uint64:
 			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
 				sqlType = "bigint unsigned AUTO_INCREMENT"
 			} else {
 				sqlType = "bigint unsigned"
@@ -117,22 +110,4 @@ func (s mysql) currentDatabase() (name string) {
 
 func (mysql) SelectFromDummyTable() string {
 	return "FROM DUAL"
-}
-
-func (s mysql) BuildForeignKeyName(tableName, field, dest string) string {
-	keyName := s.commonDialect.BuildForeignKeyName(tableName, field, dest)
-	if utf8.RuneCountInString(keyName) <= 64 {
-		return keyName
-	}
-	h := sha1.New()
-	h.Write([]byte(keyName))
-	bs := h.Sum(nil)
-
-	// sha1 is 40 digits, keep first 24 characters of destination
-	destRunes := []rune(regexp.MustCompile("(_*[^a-zA-Z]+_*|_+)").ReplaceAllString(dest, "_"))
-	if len(destRunes) > 24 {
-		destRunes = destRunes[:24]
-	}
-
-	return fmt.Sprintf("%s%x", string(destRunes), bs)
 }

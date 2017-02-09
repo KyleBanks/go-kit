@@ -1,4 +1,4 @@
-// Defines the Route interface, and registers routes to a server
+// Package router defines the Route interface, and registers routes to an http server.
 package router
 
 import (

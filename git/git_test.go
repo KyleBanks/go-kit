@@ -1,12 +1,15 @@
 package git
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestInstallPreCommitHook(t *testing.T) {
-	if err := InstallPreCommitHook(`
+	err := InstallPreCommitHook(`
 		#!/bin/bash
-		./go-test.sh
-	`, "../.git"); err != nil {
+		./sanity.sh`, "../.git")
+
+	if err != nil {
 		t.Fatal(err)
 	}
 }

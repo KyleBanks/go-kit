@@ -26,7 +26,9 @@ func (i *IosPusher) SendMessage(message *PushMessage, deviceIds ...string) error
 	for _, deviceId := range deviceIds {
 		// Construct the APNS payload...
 		payload := apns.NewPayload()
-		payload.Alert = message.Message
+		if len(message.Message) > 0 {
+			payload.Alert = message.Message
+		}
 		if len(message.IosSound) > 0 {
 			payload.Sound = message.IosSound
 		}

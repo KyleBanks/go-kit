@@ -1,10 +1,8 @@
 // Package today provides utilities for access regarding today's date.
 package today
 
-import "time"
-
-var (
-	maxNano = 999999999
+import (
+	"time"
 )
 
 // TodayBeforeMidnight returns the current date with time set to directly before midnight.
@@ -12,5 +10,5 @@ var (
 func TodayBeforeMidnight() time.Time {
 	year, month, day := time.Now().Date()
 
-	return time.Date(year, month, day, 23, 59, 59, maxNano, time.Local)
+	return time.Date(year, month, day, 23, 59, 59, 999999999, time.Local)
 }

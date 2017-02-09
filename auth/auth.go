@@ -1,8 +1,12 @@
-// The auth package provides generic authentication functionality.
+// Package auth provides generic authentication functionality.
+//
+// Note this is not 100% secure and should only be used for prototyping,
+// not for production systems or systems that are accessed by real users.
 package auth
 
 import (
 	"fmt"
+
 	"github.com/KyleBanks/go-kit/cache"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -17,7 +21,7 @@ type Authenticator interface {
 	HashedPassword() string // HashedPassword returns the user's password hash.
 }
 
-// Sets the Cache to use for authentication tokens.
+// SetCache sets the Cache to use for authentication tokens.
 func SetCache(c cache.Cacher) {
 	authCache = c
 }

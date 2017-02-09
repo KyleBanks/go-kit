@@ -1,14 +1,14 @@
-// Manages access to the database, including ORM
+// Package orm manages access to a database, including ORM-like functionality.
 package orm
 
 import (
 	"errors"
+	"reflect"
 
 	"github.com/KyleBanks/go-kit/log"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"reflect"
 )
 
 var (
@@ -24,7 +24,7 @@ type Model struct {
 	gorm.Model
 }
 
-// open creates a database connection, or returns an existing one if present.
+// Open creates a database connection, or returns an existing one if present.
 func (orm *ORM) Open(dialect, connectionString string) *gorm.DB {
 	if orm.conn != nil {
 		return orm.conn

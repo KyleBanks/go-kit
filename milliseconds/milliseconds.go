@@ -1,6 +1,8 @@
 package milliseconds
 
-import "time"
+import (
+	"time"
+)
 
 // ToMilliseconds converts a Time to milliseconds since epoch.
 func ToMilliseconds(t time.Time) int64 {

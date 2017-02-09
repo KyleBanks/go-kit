@@ -1,6 +1,8 @@
 package log
 
-import "testing"
+import (
+	"testing"
+)
 
 // NOTE: Currently we just call the methods and ensure nothing blows up.
 // Don't have a way to actually test that it's logging anything.

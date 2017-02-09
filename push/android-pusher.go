@@ -17,10 +17,14 @@ type AndroidPusher struct {
 
 // SendMessage sends a JSON payload to the specified DeviceIds through the GCM service.
 func (a *AndroidPusher) SendMessage(message *PushMessage, deviceIds ...string) error {
-	msg := gcm.NewMessage(map[string]interface{}{
-		"message": message.Message,
-		"data":    message.Data,
-	}, deviceIds...)
+	notif := map[string]interface{}{
+		"data": message.Data,
+	}
+	if len(message.Message) > 0 {
+		notif["message"] = message.Message
+	}
+
+	msg := gcm.NewMessage(notif, deviceIds...)
 	log.Infof("Sending Android Notification: {DeviceIds: %v, Payload: %v}", deviceIds, msg)
 
 	if _, err := a.gcm.Send(msg, MAX_RETRIES); err != nil {

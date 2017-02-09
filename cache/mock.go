@@ -3,10 +3,11 @@ package cache
 import (
 	"encoding/json"
 	"errors"
-	"github.com/KyleBanks/go-kit/log"
+	"fmt"
 	"sync"
 	"time"
-	"fmt"
+
+	"github.com/KyleBanks/go-kit/log"
 )
 
 // Mock provides a mocked Cache implementation for testing.
@@ -105,7 +106,7 @@ func (m Mock) Lock(key, value string, durationMs int) (bool, error) {
 	// TODO: Probably a better way to do this
 	if _, err := m.GetString(key); err == nil {
 		return false, errors.New("Key already exists")
-	}  else {
+	} else {
 		m.PutString(key, value)
 		d, _ := time.ParseDuration(fmt.Sprintf("%vms", durationMs))
 		m.Expire(key, d)
