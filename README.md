@@ -1,7 +1,7 @@
 # go-kit
 
-[![Build Status](https://travis-ci.org/KyleBanks/go-kit.svg?branch=master)](https://travis-ci.org/KyleBanks/go-kit) &nbsp; | &nbsp;
-[![GoDoc](https://godoc.org/github.com/KyleBanks/go-kit/auth?status.svg)](https://godoc.org/github.com/KyleBanks/go-kit/auth) &nbsp; | &nbsp;
+[![Build Status](https://travis-ci.org/KyleBanks/go-kit.svg?branch=master)](https://travis-ci.org/KyleBanks/go-kit) &nbsp;
+[![GoDoc](https://godoc.org/github.com/KyleBanks/go-kit?status.svg)](https://godoc.org/github.com/KyleBanks/go-kit) &nbsp;
 [![Go Report Card](https://goreportcard.com/badge/github.com/KyleBanks/go-kit)](https://goreportcard.com/report/github.com/KyleBanks/go-kit)
 
 This repository contains generic Go packages that are reused throughout various Go projects. 
