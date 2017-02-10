@@ -1,20 +1,25 @@
 // Package orm manages access to a database, including ORM-like functionality.
+//
+// The package wraps the GORM library, which can then be potentially swapped out with
+// minimal changes.
 package orm
 
 import (
-	"errors"
-	"reflect"
-
 	"github.com/KyleBanks/go-kit/log"
+	// Required to initialize the mysql driver.
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	// Required to initialize the sqlite driver.
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 var (
+	// ErrRecordNotFound is the error returned when trying to load a record
+	// that cannot be found.
 	ErrRecordNotFound = gorm.ErrRecordNotFound
 )
 
+// ORM is a container for the underlying database connection.
 type ORM struct {
 	conn *gorm.DB
 }
@@ -25,47 +30,33 @@ type Model struct {
 }
 
 // Open creates a database connection, or returns an existing one if present.
-func (orm *ORM) Open(dialect, connectionString string) *gorm.DB {
+func (orm *ORM) Open(dialect, connectionString string) (*gorm.DB, error) {
 	if orm.conn != nil {
-		return orm.conn
+		return orm.conn, nil
 	}
 
 	db, err := gorm.Open(dialect, connectionString)
 	if err != nil {
-		log.Errorf("Error opening database connection: %v", err)
-		panic(err)
-	} else if db == nil {
-		err := errors.New("Database handle is nil!")
-		log.Errorf("Error opening database connection: %v", err)
-		panic(err)
+		return nil, err
 	}
-
-	log.Infof("Database connection established: {Dialect: %v, ConnectionString: %v}", dialect, connectionString)
-
-	// Enable logging
-	db.SetLogger(log.Logger)
-	db.LogMode(true)
 
 	// Configure
 	// TODO: Accept options as a param to Open
+	db.SetLogger(log.Logger)
+	db.LogMode(true)
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(0) // Unlimited
 
 	orm.conn = db
-	return orm.conn
+	return orm.conn, nil
 }
 
 // AutoMigrate performs database migration for all Model types provided.
 func (orm ORM) AutoMigrate(models []interface{}) error {
 	for _, model := range models {
-		modelName := reflect.Indirect(reflect.ValueOf(model)).Type()
-		log.Info("Migrating model:", modelName)
-
 		if err := orm.conn.AutoMigrate(model).Error; err != nil {
-			log.Error("AutoMigrate failed for model", modelName)
 			return err
 		}
-		log.Info("Model migrated:", modelName)
 	}
 
 	return nil
@@ -111,12 +102,12 @@ func (orm ORM) Last(model interface{}, where ...interface{}) *gorm.DB {
 	return orm.conn.Last(model, where...)
 }
 
-// ModelWithId returns an instance of the specified model with the given ID.
-func (orm ORM) ModelWithId(model interface{}, id uint) error {
+// ModelWithID returns an instance of the specified model with the given ID.
+func (orm ORM) ModelWithID(model interface{}, id uint) error {
 	// First check if the Model exists.
 	// We do this so that we can avoid an error returned by the ORM
 	// when a query returns no results.
-	if exists, err := orm.ModelExistsWithId(model, id); err != nil {
+	if exists, err := orm.ModelExistsWithID(model, id); err != nil {
 		return err
 	} else if !exists {
 		return nil
@@ -130,9 +121,9 @@ func (orm ORM) ModelWithId(model interface{}, id uint) error {
 	return nil
 }
 
-// ModelExistsWithId returns a boolean indicating if an instance of the
+// ModelExistsWithID returns a boolean indicating if an instance of the
 // specified model exists with a given ID.
-func (orm ORM) ModelExistsWithId(model interface{}, id uint) (bool, error) {
+func (orm ORM) ModelExistsWithID(model interface{}, id uint) (bool, error) {
 	var count int64
 
 	err := orm.Model(model).Where(id).Count(&count).Error

@@ -5,15 +5,15 @@ import (
 	"time"
 )
 
-func TestToMilliseconds(t *testing.T) {
-	res := ToMilliseconds(time.Now())
+func TestFrom(t *testing.T) {
+	res := From(time.Now())
 	if res <= 0 {
 		t.Error("Unexpected time returned: ", res)
 	}
 }
 
-func TestNowInMilliseconds(t *testing.T) {
-	now := NowInMilliseconds()
+func TestNow(t *testing.T) {
+	now := Now()
 	if now <= 0 {
 		t.Error("Unexpected time returned: ", now)
 	}

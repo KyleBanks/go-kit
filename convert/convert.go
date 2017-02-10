@@ -1,4 +1,4 @@
-// The Convert package provides generalized type conversion utilities.
+// Package convert provides generalized type conversion utilities.
 package convert
 
 import (

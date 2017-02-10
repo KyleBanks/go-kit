@@ -20,6 +20,7 @@ var (
 	Prod Environment = "PROD"
 )
 
+// Environment defines the name of an environment, such as Prod or Dev.
 type Environment string
 
 // Get returns the current environment that the go application is running in,

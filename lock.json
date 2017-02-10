@@ -63,7 +63,7 @@
         {
             "name": "github.com/jinzhu/gorm",
             "version": "v1.0",
-            "revision": "316ca8e6a8decf0177eebc8db5443571fce5e944",
+            "revision": "5174cc5c242a728b435ea2be8a2f7f998e15429b",
             "packages": [
                 ".",
                 "dialects/sqlite"
@@ -128,7 +128,7 @@
         {
             "name": "golang.org/x/crypto",
             "branch": "master",
-            "revision": "84bacda6ede319f5074d43b5d096b7ee7f3f5d77",
+            "revision": "92783773f0d5c65e68a806909423bea53c78df01",
             "packages": [
                 "bcrypt"
             ]

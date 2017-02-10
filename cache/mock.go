@@ -102,27 +102,29 @@ func (m Mock) Expire(key string, seconds time.Duration) error {
 	return nil
 }
 
+// Lock attempts to put a lock on the key for a specified duration (in milliseconds).
 func (m Mock) Lock(key, value string, durationMs int) (bool, error) {
 	// TODO: Probably a better way to do this
 	if _, err := m.GetString(key); err == nil {
-		return false, errors.New("Key already exists")
-	} else {
-		m.PutString(key, value)
-		d, _ := time.ParseDuration(fmt.Sprintf("%vms", durationMs))
-		m.Expire(key, d)
-		return true, nil
+		return false, errors.New("key already exists")
 	}
+
+	m.PutString(key, value)
+	d, _ := time.ParseDuration(fmt.Sprintf("%vms", durationMs))
+	m.Expire(key, d)
+	return true, nil
 }
 
+// Unlock attempts to remove the lock on a key so long as the value matches.
 func (m Mock) Unlock(key, value string) error {
 	// TODO: Probably a better way to do this
 
 	if val, err := m.GetString(key); err != nil {
 		return err
 	} else if val != value {
-		return errors.New("Value mismatch")
-	} else {
-		m.Delete(key)
-		return nil
+		return errors.New("value mismatch")
 	}
+
+	m.Delete(key)
+	return nil
 }

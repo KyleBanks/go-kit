@@ -1,4 +1,5 @@
-// Simple logging service to print to stdout/stderr
+// Package log provides a simple logging service to print to stdout/stderr with timestamp
+// and log source information.
 package log
 
 import (

@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-func TestTodayBeforeMidnight(t *testing.T) {
+func TestBeforeMidnight(t *testing.T) {
 	year, month, day := time.Now().Date()
 
-	v := TodayBeforeMidnight()
+	v := BeforeMidnight()
 
 	// Test the date
 	if year != v.Year() || month != v.Month() || day != v.Day() {
