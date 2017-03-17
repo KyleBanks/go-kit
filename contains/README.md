@@ -2,6 +2,8 @@
 --
     import "github.com/KyleBanks/go-kit/contains/"
 
+Package contains adds a few small helper functions to see if a slice contains a
+particular value.
 
 ## Usage
 

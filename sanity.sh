@@ -27,7 +27,8 @@ cat <<EOF > $doc_file
 
 [![Build Status](https://travis-ci.org/KyleBanks/go-kit.svg?branch=master)](https://travis-ci.org/KyleBanks/go-kit) &nbsp;
 [![GoDoc](https://godoc.org/github.com/KyleBanks/go-kit?status.svg)](https://godoc.org/github.com/KyleBanks/go-kit) &nbsp;
-[![Go Report Card](https://goreportcard.com/badge/github.com/KyleBanks/go-kit)](https://goreportcard.com/report/github.com/KyleBanks/go-kit)
+[![Go Report Card](https://goreportcard.com/badge/github.com/KyleBanks/go-kit)](https://goreportcard.com/report/github.com/KyleBanks/go-kit) &nbsp;
+[![Coverage Status](https://coveralls.io/repos/github/KyleBanks/go-kit/badge.svg?branch=master)](https://coveralls.io/github/KyleBanks/go-kit?branch=master)
 
 This repository contains generic Go packages that are reused throughout various Go projects. 
 

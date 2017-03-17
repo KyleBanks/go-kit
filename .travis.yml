@@ -1,6 +1,6 @@
 language: go
 go:
-  - 1.7
+  - 1.8.x
 
 install: true
 
@@ -17,4 +17,7 @@ env:
     - AWS_SECRET_ACCESS_KEY=FAKESECRET
     - AWS_REGION=us-east-1
 
-script: ./sanity.sh
+before_install:
+  - go get github.com/mattn/goveralls
+script:
+  - $HOME/gopath/bin/goveralls -service=travis-ci

@@ -4,7 +4,7 @@ package git
 import (
 	"fmt"
 	"os"
-	"path/filepath"
+	"strings"
 )
 
 const (
@@ -17,7 +17,11 @@ const (
 // The path should be to the parent of the .git directory.
 // For example: <gopath>/src/github.com/KyleBanks/go-kit
 func InstallPreCommitHook(hook string, path string) error {
-	filename := fmt.Sprintf("%v/.git/hooks/pre-commit", filepath.Dir(path))
+	if len(path) > 0 && !strings.HasSuffix(path, "/") {
+		path = path + "/"
+	}
+
+	filename := fmt.Sprintf("%v.git/hooks/pre-commit", path)
 	file, err := os.Create(filename)
 	if err != nil {
 		return err

@@ -37,6 +37,7 @@ func handleWrapper(route Route) Handler {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Enable CORS
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 		t := timer.NewLogger(fmt.Sprintf("%v: {Query: %v, Form: %v}", r.URL.Path, r.URL.RawQuery, r.PostForm))
 		defer t()

@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/KyleBanks/go-kit.svg?branch=master)](https://travis-ci.org/KyleBanks/go-kit) &nbsp;
 [![GoDoc](https://godoc.org/github.com/KyleBanks/go-kit?status.svg)](https://godoc.org/github.com/KyleBanks/go-kit) &nbsp;
-[![Go Report Card](https://goreportcard.com/badge/github.com/KyleBanks/go-kit)](https://goreportcard.com/report/github.com/KyleBanks/go-kit)
+[![Go Report Card](https://goreportcard.com/badge/github.com/KyleBanks/go-kit)](https://goreportcard.com/report/github.com/KyleBanks/go-kit) &nbsp;
+[![Coverage Status](https://coveralls.io/repos/github/KyleBanks/go-kit/badge.svg?branch=master)](https://coveralls.io/github/KyleBanks/go-kit?branch=master)
 
 This repository contains generic Go packages that are reused throughout various Go projects. 
 
@@ -33,9 +34,21 @@ different connection parameters).
 For now cache supports only Redis, but eventually that could be provided by the
 client.
 
+### [clipboard](./clipboard)
+
+`import "github.com/KyleBanks/go-kit/clipboard/"`
+
+Package clipboard provides the ability to read and write to the system
+clipboard.
+
+Note: Currently only supports Mac OS.
+
 ### [contains](./contains)
 
 `import "github.com/KyleBanks/go-kit/contains/"`
+
+Package contains adds a few small helper functions to see if a slice contains a
+particular value.
 
 ### [convert](./convert)
 

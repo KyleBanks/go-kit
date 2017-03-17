@@ -7,7 +7,7 @@ import (
 func TestInstallPreCommitHook(t *testing.T) {
 	err := InstallPreCommitHook(`
 		#!/bin/bash
-		./sanity.sh`, "../.git")
+		./sanity.sh`, "../")
 
 	if err != nil {
 		t.Fatal(err)
