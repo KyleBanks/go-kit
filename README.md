@@ -149,6 +149,12 @@ Package push provides GCM and APN push notification functionality.
 Package router defines the Route interface, and registers routes to an http
 server.
 
+### [storage](./storage)
+
+`import "github.com/KyleBanks/go-kit/storage/"`
+
+Package storage provides the ability to persist and retrieve structs.
+
 ### [timer](./timer)
 
 `import "github.com/KyleBanks/go-kit/timer/"`
