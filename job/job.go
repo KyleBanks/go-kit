@@ -11,6 +11,7 @@ import (
 // executions. The Job only stops when the `Stop` function is called.
 type Job struct {
 	fn             func()
+	fnargs         interface{}
 	delay          time.Duration
 	runImmediately bool
 	firstRun       bool
@@ -46,7 +47,7 @@ func (j *Job) start() {
 
 			// Execute the function.
 			default:
-				j.fn()
+				j.fn(fnargs)
 			}
 		}
 	}()
@@ -57,9 +58,10 @@ func (j *Job) start() {
 //
 // If the runImmediately parameter is true, the function will execute immediately. Otherwise,
 // it will be invoked first after the duration of i.
-func Register(f func(), delay time.Duration, runImmediately bool) *Job {
+func Register(f func(), fnargs interface{}, delay time.Duration, runImmediately bool) *Job {
 	j := Job{
 		fn:             f,
+		fnargs:         fnargs,
 		delay:          delay,
 		runImmediately: runImmediately,
 		firstRun:       true,
