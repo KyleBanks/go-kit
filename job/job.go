@@ -47,7 +47,7 @@ func (j *Job) start() {
 
 			// Execute the function.
 			default:
-				j.fn(fnargs)
+				j.fn(j.fnargs)
 			}
 		}
 	}()
