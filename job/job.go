@@ -10,7 +10,7 @@ import (
 // A Job executes it's function continuously with a predefined delay between
 // executions. The Job only stops when the `Stop` function is called.
 type Job struct {
-	fn             func()
+	fn             func(interface{})
 	fnargs         interface{}
 	delay          time.Duration
 	runImmediately bool
@@ -33,7 +33,7 @@ func (j *Job) start() {
 		for {
 			// Check if runImmediately is set on the first run
 			if j.firstRun && j.runImmediately {
-				j.fn()
+				j.fn(j.fnargs)
 			}
 			j.firstRun = false
 
@@ -58,7 +58,7 @@ func (j *Job) start() {
 //
 // If the runImmediately parameter is true, the function will execute immediately. Otherwise,
 // it will be invoked first after the duration of i.
-func Register(f func(), fnargs interface{}, delay time.Duration, runImmediately bool) *Job {
+func Register(f func(interface{}), fnargs interface{}, delay time.Duration, runImmediately bool) *Job {
 	j := Job{
 		fn:             f,
 		fnargs:         fnargs,
