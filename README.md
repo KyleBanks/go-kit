@@ -159,7 +159,7 @@ Package storage provides the ability to persist and retrieve structs.
 
 `import "github.com/KyleBanks/go-kit/timer/"`
 
-Package timer provides the ability to time abritrary events, like the duration
+Package timer provides the ability to time arbitrary events, like the duration
 of a method call.
 
 ### [today](./today)
