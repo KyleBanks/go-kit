@@ -17,9 +17,10 @@ func TestRegister(t *testing.T) {
 	for _, tt := range tests {
 		callCount := 0
 		delay := time.Millisecond * 500
-		j := Register(func() {
+		fnargs := "test"
+		j := Register(func(interface{}) {
 			callCount++
-		}, delay, tt.runImmediately)
+		}, fnargs, delay, tt.runImmediately)
 
 		if j == nil {
 			t.Fatal("Unexpected nil response from Register")
@@ -53,9 +54,10 @@ func TestStop(t *testing.T) {
 	{
 		// Should still runImmediately even if stop is immediately called
 		callCount := 0
-		j := Register(func() {
+		fnargs := "test"
+		j := Register(func(interface{}) {
 			callCount++
-		}, time.Hour, true)
+		}, fnargs, time.Hour, true)
 
 		j.Stop()
 
@@ -71,9 +73,10 @@ func TestStop(t *testing.T) {
 		// Should stop executions after Stop is called
 		callCount := 0
 		delay := time.Millisecond * 500
-		j := Register(func() {
+		fnargs := "test"
+		j := Register(func(interface{}) {
 			callCount++
-		}, delay, false)
+		}, fnargs, delay, false)
 
 		// Wait for first execution
 		time.Sleep(delay + time.Millisecond*100)
